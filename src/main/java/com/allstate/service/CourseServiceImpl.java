@@ -16,4 +16,13 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> findAllCourses() {
         return repository.findAll();
     }
+
+    public Course findById(Long id) {
+        return repository.findById(id).get();
+    }
+
+    public Course addCourse(Course course) {
+        repository.save(course);
+        return course;
+    }
 }

@@ -16,4 +16,13 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findAllCourses() {
         return repository.findAll();
     }
+
+    public Student findById(Long id) {
+        return repository.findById(id).get();
+    }
+
+    public Student addStudent(Student student) {
+        repository.save(student);
+        return student;
+    }
 }

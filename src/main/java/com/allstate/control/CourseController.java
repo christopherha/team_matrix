@@ -17,24 +17,25 @@ public class CourseController {
     @Autowired
     private CourseService service;
 
-    @GetMapping("course/findAll")
+    private static final String GROUP_QUAL = "course/";
+
+    @GetMapping(GROUP_QUAL + "findAll")
     public List<Course> findAllCourses() {
         return service.findAllCourses();
     }
 
-    @GetMapping("course/findById")
-    public List<Course> findById(Long id) {
-        return service.findAllCourses();
+    @GetMapping(GROUP_QUAL + "findById")
+    public Course findById(Long id) {
+        return service.findById(id);
     }
 
-    @GetMapping("course/findByStudentId")
+    @GetMapping(GROUP_QUAL + "findByStudentId")
     public List<Course> findByStudentId(Long id) {
         return service.findAllCourses();
     }
 
-
-    @PostMapping("course/addCourse")
-    public List<Course> addCourse(Course course) {
-
+    @PostMapping(GROUP_QUAL + "addCourse")
+    public Course addCourse(Course course) {
+        return service.addCourse(course);
     }
 }

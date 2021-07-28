@@ -12,6 +12,8 @@ public class EnrollController {
     @Autowired
     private EnrollService service;
 
+    private static final String GROUP_QUAL = "enroll/";
 
+    //TODO: Add methods here for enrolling students into courses
 
 }
