@@ -1,3 +1,5 @@
+package com.allstate.domain;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -79,7 +81,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
+        return "com.allstate.model.Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", abreviatedName='" + abreviatedName + '\'' +
