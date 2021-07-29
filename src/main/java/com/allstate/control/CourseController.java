@@ -3,38 +3,34 @@ package com.allstate.control;
 import com.allstate.domain.Course;
 import com.allstate.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api/course")
 public class CourseController {
 
     @Autowired
     private CourseService service;
 
-    private static final String GROUP_QUAL = "course/";
-
-    @GetMapping(GROUP_QUAL + "findAll")
+    @GetMapping("/findAll")
     public List<Course> findAllCourses() {
         return service.findAllCourses();
     }
 
-    @GetMapping(GROUP_QUAL + "findById")
+    @GetMapping("/findById")
     public Course findById(Long id) {
         return service.findById(id);
     }
 
-    @GetMapping(GROUP_QUAL + "findByStudentId")
+    @GetMapping("/findByStudentId")
     public List<Course> findByStudentId(Long id) {
         return service.findAllCourses();
     }
 
-    @PostMapping(GROUP_QUAL + "addCourse")
+    @PostMapping("/addCourse")
     public Course addCourse(Course course) {
         return service.addCourse(course);
     }
