@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class CourseControllerTest {
 
@@ -36,4 +36,15 @@ public class CourseControllerTest {
         courseController.findById(1L);
         verify(mockCourseService).findById(eq(1L));
     }
+
+    @Test
+    public void testFindByInstructor(){
+        when(mockCourseService.retrieveByInstructor(Mockito.anyString())).thenReturn(new ArrayList<>());
+        courseController.findByInstructor("foo");
+        verify(mockCourseService).retrieveByInstructor(eq("foo"));
+    }
+
+
+
+
 }

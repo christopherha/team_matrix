@@ -1,11 +1,13 @@
 package com.allstate.control;
 
 import com.allstate.domain.Course;
+import com.allstate.domain.Student;
 import com.allstate.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -20,18 +22,42 @@ public class CourseController {
         return service.findAllCourses();
     }
 
+    @GetMapping("/findByInstructor")
+    public List<Course> findByInstructor(@RequestParam("instructor") String instructor) {
+        return service.retrieveByInstructor(instructor);
+    }
+
+    @GetMapping("/findStudentsById")
+    public List<Student> findStudentsById(@RequestParam("id") Long id) {
+        return service.retrieveAllStudents(id);
+    }
+
     @GetMapping("/findById")
-    public Course findById(Long id) {
+    public Course findById(@RequestParam("id") Long id) {
         return service.findById(id);
     }
 
-    @GetMapping("/findByStudentId")
-    public List<Course> findByStudentId(Long id) {
-        return service.findAllCourses();
-    }
-
     @PostMapping("/addCourse")
-    public Course addCourse(Course course) {
+    public Course addCourse(@RequestBody Course course) {
         return service.addCourse(course);
     }
+
+    @PostMapping("/updateCourse")
+    public Course updateCourse(@RequestBody Course course) {
+        return service.updateCourse(course);
+    }
+
+    @DeleteMapping("/deleteCourse")
+    public Map<String,String> deleteCourse(@RequestParam("id") Long id) {
+        return service.deleteCourse(id);
+    }
+
+
+
+
+
+
+
+//
+//    List<Student> retrieveAllStudents(Long id);
 }
