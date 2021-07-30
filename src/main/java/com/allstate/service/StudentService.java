@@ -11,4 +11,8 @@ public interface StudentService {
     Student findById(Long id);
 
     Student addStudent(Student student);
+
+    Student updateStudent(Student student);
+
+    public Student addCourseToStudent(Long courseId, Long studentId);
 }

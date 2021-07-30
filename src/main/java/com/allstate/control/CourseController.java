@@ -27,11 +27,6 @@ public class CourseController {
         return service.retrieveByInstructor(instructor);
     }
 
-    @GetMapping("/findStudentsById")
-    public List<Student> findStudentsById(@RequestParam("id") Long id) {
-        return service.retrieveAllStudents(id);
-    }
-
     @GetMapping("/findById")
     public Course findById(@RequestParam("id") Long id) {
         return service.findById(id);
@@ -52,12 +47,4 @@ public class CourseController {
         return service.deleteCourse(id);
     }
 
-
-
-
-
-
-
-//
-//    List<Student> retrieveAllStudents(Long id);
 }

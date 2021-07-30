@@ -19,6 +19,4 @@ public interface CourseService {
     Map<String,String> deleteCourse(Long id);
 
     List<Course> retrieveByInstructor(String instructor);
-
-    List<Student> retrieveAllStudents(Long id);
 }

@@ -21,17 +21,25 @@ public class StudentController {
     }
 
     @GetMapping("/findById")
-    public Student findById(Long id) {
+    public Student findById(@RequestParam(name = "id") Long id) {
         return service.findById(id);
     }
 
-    @GetMapping("/findByMajor")
-    public List<Student> findByMajor(Long id) {
-        return service.findAllCourses();
-    }
-
     @PostMapping("/addStudent")
-    public Student addCourse(Student student) {
+    public Student addStudent(@RequestBody Student student) {
         return service.addStudent(student);
     }
+
+    @PostMapping("/addCourseToStudent")
+    public Student addCourseToStudent(@RequestParam("studentId") Long studentId,
+                                      @RequestParam("courseId") Long courseId) {
+        return service.addCourseToStudent(courseId, studentId);
+    }
+
+    @PostMapping("/updateStudent")
+    public Student updateStudent(@RequestBody Student student) {
+        return service.updateStudent(student);
+    }
+
+
 }

@@ -50,16 +50,6 @@ public class CourseServiceImpl implements CourseService {
         return repository.findAllByInstructor(instructor);
     }
 
-    @Override
-    public List<Student> retrieveAllStudents(Long id) {
-        Optional<Course> course =  repository.findById(id);
-        if(course.isPresent()){
-            return course.get().getStudents();
-        }
-        return new ArrayList<>();
-
-    }
-
     private void courseFieldValidation(Course course){
         final String courseName = course.getName();
         final String courseInstructor = course.getInstructor();

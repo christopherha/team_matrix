@@ -13,17 +13,17 @@ public class Course {
     private String name;
     private String abreviatedName;
     private String instructor;
-    @ManyToMany
-    private List<Student> students;
+    @ManyToOne
+    private Student student;
 
     public Course(){}
 
-    public Course(Long id, String name, String abreviatedName, String instructor, List<Student> students) {
+    public Course(Long id, String name, String abreviatedName, String instructor, Student student) {
         this.id = id;
         this.name = name;
         this.abreviatedName = abreviatedName;
         this.instructor = instructor;
-        this.students = students;
+        this.student = student;
     }
 
     public Long getId() {
@@ -58,12 +58,12 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Override
@@ -71,12 +71,12 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return Objects.equals(id, course.id) && Objects.equals(name, course.name) && Objects.equals(abreviatedName, course.abreviatedName) && Objects.equals(instructor, course.instructor) && Objects.equals(students, course.students);
+        return Objects.equals(id, course.id) && Objects.equals(name, course.name) && Objects.equals(abreviatedName, course.abreviatedName) && Objects.equals(instructor, course.instructor) && Objects.equals(student, course.student);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, abreviatedName, instructor, students);
+        return Objects.hash(id, name, abreviatedName, instructor, student);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Course {
                 ", name='" + name + '\'' +
                 ", abreviatedName='" + abreviatedName + '\'' +
                 ", instructor='" + instructor + '\'' +
-                ", students=" + students +
+                ", student=" + student +
                 '}';
     }
 }
