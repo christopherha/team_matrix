@@ -40,7 +40,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Map<String,String> deleteCourse(Long id) {
         Map<String,String> responseMap = new HashMap<>();
-        responseMap.put("Status", "Success " + id + " was deleted");
+        responseMap.put("Status", "Success Course ID " + id + " was deleted");
         repository.deleteById(id);
         return responseMap;
     }

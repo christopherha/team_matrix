@@ -14,7 +14,6 @@ public class Student {
     private String firstName;
     private String lastName;
     private String grade;
-    //private Double gpa;
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Course> courses;
 

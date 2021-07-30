@@ -3,6 +3,7 @@ package com.allstate.service;
 import com.allstate.domain.Student;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
 
@@ -15,4 +16,6 @@ public interface StudentService {
     Student updateStudent(Student student);
 
     public Student addCourseToStudent(Long courseId, Long studentId);
+
+    public Map<String,String> deleteStudent(Long id);
 }

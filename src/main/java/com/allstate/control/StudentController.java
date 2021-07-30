@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -23,6 +24,11 @@ public class StudentController {
     @GetMapping("/findById")
     public Student findById(@RequestParam(name = "id") Long id) {
         return service.findById(id);
+    }
+
+    @DeleteMapping("/deleteStudent")
+    public Map<String,String> deleteStudent(@RequestParam("id") Long id){
+        return service.deleteStudent(id);
     }
 
     @PostMapping("/addStudent")
