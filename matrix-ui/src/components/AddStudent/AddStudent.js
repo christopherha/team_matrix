@@ -1,10 +1,10 @@
 import './AddStudent.css';
 import {useReducer, useState} from "react";
-import {addNewstudent} from "../../data/DataFunctions";
+import {addNewStudent} from "../../data/DataFunctions";
 
 const AddStudent = () => {
 
-    const initialNewTransactionState = {firstName : "", lastName:"", grade : ""};
+    const initialNewStudentState = {firstName : "", lastName:"", grade : ""};
 
     const [message, setMessage] = useState("");
 
@@ -15,14 +15,14 @@ const AddStudent = () => {
         };
     }
 
-    const [newStudent, dispatch] = useReducer(formReducer , initialnewStudentState);
+    const [newStudent, dispatch] = useReducer(formReducer , initialNewStudentState);
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setMessage("saving.....");
         console.log(newStudent);
-        const response = addNewstudent(newStudent);
+        const response = addNewStudent(newStudent);
         response.then(
             result => {
                 if (result.status === 200) {
@@ -40,23 +40,23 @@ const AddStudent = () => {
         dispatch( {field : event.target.id, value : event.target.value});
     }
 
-    const {orderId, date,  amount , country, currency, taxCode, taxRate, type} = newTransaction;
+    const {firstName, lastName,  grade} = newStudent;
 
     return (
         <form className="addStudentForm" onSubmit={handleSubmit}>
             <h2>New Student</h2>
-            <label htmlFor="firstName">Order Id</label>
+            <label htmlFor="firstName">First Name</label>
             <input type="text" id="firstName"  value={firstName} onChange={handleChange} />
             <br/>
-            <label htmlFor="firstName">Order Id</label>
-            <input type="text" id="firstName"  value={lastName} onChange={handleChange} />
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" id="lastName"  value={lastName} onChange={handleChange} />
             <br/>
-            <label htmlFor="firstName">Order Id</label>
-            <input type="text" id="firstName"  value={grade} onChange={handleChange} />
+            <label htmlFor="grade">Grade</label>
+            <input type="text" id="grade"  value={grade} onChange={handleChange} />
             <br/>
             <br/>
             <button type="submit">Save</button>
-            <div className="addTransactionMessage">{message}</div>
+            <div className="addStudentMessage">{message}</div>
         </form>
     );
 }
