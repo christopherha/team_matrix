@@ -37,7 +37,7 @@ public class CourseController {
         return service.addCourse(course);
     }
 
-    @PostMapping("/updateCourse")
+    @PutMapping("/updateCourse")
     public Course updateCourse(@RequestBody Course course) {
         return service.updateCourse(course);
     }

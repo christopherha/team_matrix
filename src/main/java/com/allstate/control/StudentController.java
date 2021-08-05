@@ -42,10 +42,8 @@ public class StudentController {
         return service.addCourseToStudent(courseId, studentId);
     }
 
-    @PostMapping("/updateStudent")
+    @PutMapping("/updateStudent")
     public Student updateStudent(@RequestBody Student student) {
         return service.updateStudent(student);
     }
-
-
 }
