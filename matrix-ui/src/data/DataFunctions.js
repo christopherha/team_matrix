@@ -7,6 +7,12 @@ export const addNewStudent = (student) =>{
         data: student});
 }
 
+export const getStudentById = (studentId) => {
+    return  axios ({url: `http://localhost:8080/api/student/findById?id=${studentId}`,
+        method: "GET",
+        headers: {'Accept':'application/json'}});
+}
+
 const enrollmentApi = (studentId, courseId, endpoint) => {
     return  axios ({url: `http://localhost:8080/api/student/${endpoint}?studentId=${studentId}&courseId=${courseId}`,
         method: "POST",
@@ -19,4 +25,10 @@ export const enrollStudent = (studentId, courseId) => {
 
 export const disenrollStudent = (studentId, courseId) => {
     return enrollmentApi(studentId, courseId, "removeCourseFromStudent");
+}
+
+export const getAllCourses = () => {
+    return  axios ({url: "http://localhost:8080/api/course/findAll",
+        method: "GET",
+        headers: {'Accept':'application/json'}});
 }

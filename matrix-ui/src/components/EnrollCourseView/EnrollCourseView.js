@@ -1,35 +1,64 @@
 import './EnrollCourseView.css'
-import {disenrollStudent, enrollStudent} from "../../data/DataFunctions";
+import {disenrollStudent, enrollStudent, getAllCourses, getStudentById} from "../../data/DataFunctions";
+import {useState, useEffect} from "react";
+import {useHistory, useParams} from 'react-router-dom';
 
-const EnrollCourseView = () => {
+const EnrollCourseView = (props) => {
 
     // TODO This needs to be passed in props or loaded. Then delete this line
     // mocked current Student data
-    const currentStudent = {id: "1", firstName: "AJ", lastName: "Colby", grade: "Freshman", courses: [{id: 3},{id: 4}]};
+    // const currentStudent = {id: "1", firstName: "AJ", lastName: "Colby", grade: "Freshman", courses: [{id: 3},{id: 4}]};
 
-    // TODO This needs to be passed in props or loaded. Then delete this line
-    // mocked current list of all available courses
-    const getAllCourses = [
-        {id: 1, name: "Biology 1101", abreviatedName: "BIO-1101", instructor: "Chris Harsh"},
-        {id: 2, name: "Biology 2101", abreviatedName: "BIO-2101", instructor: "Chris Harsh"},
-        {id: 3, name: "Operating Systems 3001", abreviatedName: "OS-3001", instructor: "Aaron Little"},
-        {id: 4, name: "Java Programming 2001", abreviatedName: "JAVA-2001", instructor: "Matt Thornfield"},
-        {id: 5, name: "Java Programming 2501", abreviatedName: "JAVA-2501", instructor: "Matt Thornfield"},
-        {id: 6, name: "C Programming 2002", abreviatedName: "CP-2002", instructor: "Amrita Goswami"},
-        {id: 7, name: "C Programming 2502", abreviatedName: "CP-2502", instructor: "Amrita Goswami"}
-        ];
+    const [currentStudent, setCurrentStudent] = useState({});
+
+    const params = useParams();
+    const selectedStudentId = params.id != null ? params.id : props.studentId;
+
+    const history = useHistory();
+
+    const getStudent = () => {
+        console.log("Called the callStudent Method with id " + selectedStudentId, params)
+
+        if (selectedStudentId === null) {
+            console.log("Student id not provided! ");
+        } else {
+            getStudentById(selectedStudentId).then(
+                response => {
+                    setCurrentStudent(response.data)
+                    history.push(`/enroll?id=${selectedStudentId}`);
+                }
+            ).catch(
+                error => console.log("Failed to fetch student!" + error)
+            )
+        }
+    }
+
+    useEffect(() => {getStudent()}, []);
+
+    const [allCoursesList, setAllCoursesList] = useState([]);
+
+    const allCourses = () => {
+        console.log("Called the allCourses Method")
+        getAllCourses().then(
+            response => setAllCoursesList(response.data)
+        ).catch(
+            error => console.log("Failed to fetch courses!" + error)
+        )
+    }
+
+    useEffect(() => {allCourses()}, []);
 
     // Get all of the course id's the Student is enrolled in when the page initially loads.
     // Needs Student object of current selected Student. (currently mocked with 'currentStudent')
-    const allDefaultEnrolledCourses = currentStudent.courses.map((course) => course.id);
+    const allDefaultEnrolledCourses = () => currentStudent.courses.map((course) => course.id);
 
     // Set whether this student is already enrolled in the current course (passed as the param)
     const setDefaultEnrollmentStatus = (course) => {
-        return (allDefaultEnrolledCourses.some(enrolledCourseId => course.id === enrolledCourseId))
+        return (allDefaultEnrolledCourses().some(enrolledCourseId => course.id === enrolledCourseId))
     }
 
     // Iterate over the list of all available courses and set their defaulted enrollment status
-    const allCoursesWithEnrollStatus = getAllCourses.map((course) => ({...course, isEnrolled: setDefaultEnrollmentStatus(course)}));
+    const allCoursesWithEnrollStatus = allCoursesList.map((course) => ({...course, isEnrolled: setDefaultEnrollmentStatus(course)}));
 
     // Whenever we check/uncheck enrollment can enroll/disenroll.
     // We need the current student, course that was checked/unchecked, and status of enroll

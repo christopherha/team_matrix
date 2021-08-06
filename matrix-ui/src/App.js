@@ -20,8 +20,8 @@ function App() {
                 <Route path="/add" exact={true}>
                     <AddStudent/>
                 </Route>
-                <Route path="/enroll" exact={true}>
-                    <EnrollCourseView/>
+                <Route path={["/enroll", "/enroll/:id"]} exact={true}>
+                    <EnrollCourseView studentId="1"/>
                 </Route>
                  <Route path="/" exact={true}>
                  </Route>

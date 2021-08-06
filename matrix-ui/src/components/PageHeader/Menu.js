@@ -7,7 +7,7 @@ const Menu = () => {
             <li><Link to="/find">Find Student</Link></li>
             <li><Link to="/find">Find Course</Link></li>
             <li><Link to="/add">Add Student</Link></li>
-            <li><Link to="/enroll">Enroll Student to a course</Link></li>
+            <li><Link to="/enroll?id=1">Enroll Student to a course</Link></li>
         </ul>
     );
 }
