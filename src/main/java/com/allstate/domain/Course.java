@@ -13,12 +13,12 @@ public class Course {
     private String name;
     private String abreviatedName;
     private String instructor;
-    @ManyToOne
-    private Student student;
+    @ManyToMany
+    private List<Student> student;
 
     public Course(){}
 
-    public Course(Long id, String name, String abreviatedName, String instructor, Student student) {
+    public Course(Long id, String name, String abreviatedName, String instructor, List<Student> student) {
         this.id = id;
         this.name = name;
         this.abreviatedName = abreviatedName;
@@ -58,11 +58,11 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public Student getStudent() {
+    public List<Student> getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(List<Student> student) {
         this.student = student;
     }
 

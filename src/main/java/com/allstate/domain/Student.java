@@ -14,7 +14,7 @@ public class Student {
     private String firstName;
     private String lastName;
     private String grade;
-    @OneToMany
+    @ManyToMany
     private List<Course> courses;
 
     public Student(){}
