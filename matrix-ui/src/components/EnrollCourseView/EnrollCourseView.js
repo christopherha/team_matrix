@@ -1,7 +1,7 @@
 import './EnrollCourseView.css'
 import {disenrollStudent, enrollStudent, getAllCourses, getStudentById} from "../../data/DataFunctions";
 import {useState, useEffect} from "react";
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 
 const EnrollCourseView = (props) => {
 
@@ -11,19 +11,21 @@ const EnrollCourseView = (props) => {
 
     const [currentStudent, setCurrentStudent] = useState({});
 
-    const params = useParams();
-    const selectedStudentId = params.id != null ? params.id : props.studentId;
+    const location = useLocation();
+    const studentIdParam = new URLSearchParams(location.search).get("id");
+    const selectedStudentId = studentIdParam != null ? studentIdParam : props.studentId;
 
     const history = useHistory();
 
     const getStudent = () => {
-        console.log("Called the callStudent Method with id " + selectedStudentId, params)
+        console.log("Called the callStudent Method with id ",  studentIdParam)
 
         if (selectedStudentId === null) {
             console.log("Student id not provided! ");
         } else {
             getStudentById(selectedStudentId).then(
                 response => {
+                    console.log("Found student ",  response.data)
                     setCurrentStudent(response.data)
                     history.push(`/enroll?id=${selectedStudentId}`);
                 }
@@ -33,24 +35,68 @@ const EnrollCourseView = (props) => {
         }
     }
 
-    useEffect(() => {getStudent()}, []);
+
+    const getData = () => {
+
+        console.log("Called the callStudent Method with id ", studentIdParam)
+
+        if (selectedStudentId === null) {
+            console.log("Student id not provided! ");
+        } else {
+            getStudentById(selectedStudentId).then(
+                response => {
+                    console.log("Found student ", response.data)
+                    setCurrentStudent(response.data)
+                    history.push(`/enroll?id=${selectedStudentId}`);
+                }
+            ).catch(
+                error => console.log("Failed to fetch student!" + error)
+            )
+        }
+
+            console.log("Called the allCourses Method")
+            getAllCourses().then(
+                response => {
+                    console.log("Fetched courses", response.data)
+                    setAllCoursesList(response.data)
+                }
+            ).catch(
+                error => console.log("Failed to fetch courses!" + error)
+            )
+        }
+
+    useEffect(() => {getData()}, []);
+    // useEffect(() => {getStudent()}, []);
 
     const [allCoursesList, setAllCoursesList] = useState([]);
 
     const allCourses = () => {
         console.log("Called the allCourses Method")
         getAllCourses().then(
-            response => setAllCoursesList(response.data)
+            response => {
+                console.log("Fetched courses", response.data)
+                setAllCoursesList(response.data)
+            }
         ).catch(
             error => console.log("Failed to fetch courses!" + error)
         )
     }
 
-    useEffect(() => {allCourses()}, []);
+    // useEffect(() => {allCourses()}, []);
 
     // Get all of the course id's the Student is enrolled in when the page initially loads.
     // Needs Student object of current selected Student. (currently mocked with 'currentStudent')
-    const allDefaultEnrolledCourses = () => currentStudent.courses.map((course) => course.id);
+    const allDefaultEnrolledCourses = () => {
+
+        if (currentStudent.courses !== null) {
+            console.log("Printing student ", currentStudent)
+            return currentStudent.courses.map((course) => course.id);
+        } else {
+            console.log("Student unavailable... ");
+            getStudent();
+            return currentStudent.courses.map((course) => course.id);
+        }
+    };
 
     // Set whether this student is already enrolled in the current course (passed as the param)
     const setDefaultEnrollmentStatus = (course) => {
