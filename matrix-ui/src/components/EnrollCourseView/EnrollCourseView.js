@@ -1,35 +1,63 @@
 import './EnrollCourseView.css'
-import {disenrollStudent, enrollStudent} from "../../data/DataFunctions";
+import {disenrollStudent, enrollStudent, getAllCourses, getStudentById} from "../../data/DataFunctions";
+import {useState, useEffect} from "react";
+import {useHistory, useLocation} from 'react-router-dom';
 
-const EnrollCourseView = () => {
+const EnrollCourseView = (props) => {
 
-    // TODO This needs to be passed in props or loaded. Then delete this line
-    // mocked current Student data
-    const currentStudent = {id: "1", firstName: "AJ", lastName: "Colby", grade: "Freshman", courses: [{id: 3},{id: 4}]};
+    const [studentLoading, setStudentLoading] = useState(true);
+    const [coursesLoading, setCoursesLoading] = useState(true);
+    const [currentStudent, setCurrentStudent] = useState({});
 
-    // TODO This needs to be passed in props or loaded. Then delete this line
-    // mocked current list of all available courses
-    const getAllCourses = [
-        {id: 1, name: "Biology 1101", abreviatedName: "BIO-1101", instructor: "Chris Harsh"},
-        {id: 2, name: "Biology 2101", abreviatedName: "BIO-2101", instructor: "Chris Harsh"},
-        {id: 3, name: "Operating Systems 3001", abreviatedName: "OS-3001", instructor: "Aaron Little"},
-        {id: 4, name: "Java Programming 2001", abreviatedName: "JAVA-2001", instructor: "Matt Thornfield"},
-        {id: 5, name: "Java Programming 2501", abreviatedName: "JAVA-2501", instructor: "Matt Thornfield"},
-        {id: 6, name: "C Programming 2002", abreviatedName: "CP-2002", instructor: "Amrita Goswami"},
-        {id: 7, name: "C Programming 2502", abreviatedName: "CP-2502", instructor: "Amrita Goswami"}
-        ];
+    const location = useLocation();
+    const studentIdParam = new URLSearchParams(location.search).get("id");
+    const selectedStudentId = studentIdParam != null ? studentIdParam : props.studentId;
+
+    const history = useHistory();
+
+    const getData = () => {
+        getStudentById(selectedStudentId).then(
+                response => {
+                    setCurrentStudent(response.data)
+                    setStudentLoading(false)
+                    history.push(`/enroll?id=${selectedStudentId}`);
+                }
+            ).catch(
+                error => console.log("Failed to fetch student!" + error)
+            )
+
+            getAllCourses().then(
+                response => {
+                    setAllCoursesList(response.data)
+                    setCoursesLoading(false)
+                }
+            ).catch(
+                error => console.log("Failed to fetch courses!" + error)
+            )
+        }
+
+    useEffect(() => {getData()}, []);
+
+    const [allCoursesList, setAllCoursesList] = useState([]);
 
     // Get all of the course id's the Student is enrolled in when the page initially loads.
     // Needs Student object of current selected Student. (currently mocked with 'currentStudent')
-    const allDefaultEnrolledCourses = currentStudent.courses.map((course) => course.id);
+    const allDefaultEnrolledCourses = () => {
+
+        if (!studentLoading) {
+            return currentStudent.courses.map((course) => course.id);
+        }
+    };
 
     // Set whether this student is already enrolled in the current course (passed as the param)
     const setDefaultEnrollmentStatus = (course) => {
-        return (allDefaultEnrolledCourses.some(enrolledCourseId => course.id === enrolledCourseId))
+        if (!studentLoading) {
+            return (allDefaultEnrolledCourses().some(enrolledCourseId => course.id === enrolledCourseId))
+        }
     }
 
     // Iterate over the list of all available courses and set their defaulted enrollment status
-    const allCoursesWithEnrollStatus = getAllCourses.map((course) => ({...course, isEnrolled: setDefaultEnrollmentStatus(course)}));
+    const allCoursesWithEnrollStatus = allCoursesList.map((course) => ({...course, isEnrolled: setDefaultEnrollmentStatus(course)}));
 
     // Whenever we check/uncheck enrollment can enroll/disenroll.
     // We need the current student, course that was checked/unchecked, and status of enroll
@@ -60,6 +88,12 @@ const EnrollCourseView = () => {
 
     return (
         <div>
+
+            {/* Ensure that we don't try to load the page before we get the data... */}
+            {(studentLoading || coursesLoading) && <p className="loadingMessage">The data is loading please wait...</p>}
+
+            {/* Once we have the data, load the page... */}
+            {!studentLoading && !coursesLoading &&
             <table className="coursesViewTable">
                 <thead>
                 <tr>
@@ -71,19 +105,21 @@ const EnrollCourseView = () => {
                 </tr>
                 </thead>
                 <tbody>
-                        {
-                            allCoursesWithEnrollStatus.map(course => {
-                            return (
-                                <tr key={course.id}>
-                                <td><input type="checkbox" defaultChecked={!!course.isEnrolled}  onChange={(event) => onEnrollCheckChange(event, course)}/></td>
+                {
+                    allCoursesWithEnrollStatus.map(course => {
+                        return (
+                            <tr key={course.id}>
+                                <td><input type="checkbox" defaultChecked={!!course.isEnrolled}
+                                           onChange={(event) => onEnrollCheckChange(event, course)}/></td>
                                 <td>{course.id}</td>
                                 <td>{course.name}</td>
                                 <td>{course.abreviatedName}</td>
                                 <td>{course.instructor}</td>
-                                </tr>);
-                        })}
+                            </tr>);
+                    })}
                 </tbody>
             </table>
+            }
         </div>
     );
 }

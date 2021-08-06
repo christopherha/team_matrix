@@ -1,7 +1,8 @@
 import { useState } from "react";
+import {Link} from "react-router-dom";
 
 import axios from 'axios';
-import './components/EnrollCourseView/EnrollCourseView.css'
+import '../EnrollCourseView/EnrollCourseView.css'
 
 function StudentList(props){
 
@@ -19,11 +20,13 @@ const getAllStudents = () =>{
 
 
 const studentListItems = student.map((student) =>
-<tr>
-    <td><input type="checkbox"/></td>
+<tr key = {student.id}>
+    
     <td>{student.firstName} </td>
     <td>{student.lastName} </td>
     <td>{student.grade} </td>
+   <td> <Link to={`/enroll?id=${student.id}`}>Enroll</Link>
+</td>
 </tr>
 
 
@@ -35,17 +38,18 @@ return(
 <table className="coursesViewTable">
                 <thead>
                 <tr>
-                    <th>Select</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Grade</th>
+                    <th>Enroll</th>
                 </tr>
                 </thead>
                 <tbody>
                     {studentListItems}
-                    <button onClick={getAllStudents}>Get Students</button>
+                    
                 </tbody>
             </table>
+            <button className = 'center' onClick={getAllStudents}>Get Students</button>
 </div>
 
 );

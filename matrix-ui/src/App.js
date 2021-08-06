@@ -1,7 +1,7 @@
 import './App.css';
 import EnrollCourseView from "./components/EnrollCourseView/EnrollCourseView";
-import StudentList from './StudentList';
-import CourseList from './CourseList';
+import StudentList from './components/StudentList/StudentList';
+import CourseList from './components/CourseList/CourseList';
 import AddStudent from "./components/AddStudent/AddStudent";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import {BrowserRouter,Switch, Route} from "react-router-dom";
@@ -28,9 +28,9 @@ function App() {
                  <Route path="/addCourse" exact={true}>
                     <AddCourse/>
                 </Route>
-                <Route path="/enroll" exact={true}>
-                    <EnrollCourseView/>
-                </Route>
+                 <Route path={["/enroll", "/enroll/:id"]} exact={true}>
+                     <EnrollCourseView studentId="1"/>
+                 </Route>
                  <Route path="/" exact={true}>
                  </Route>
                 <Route>

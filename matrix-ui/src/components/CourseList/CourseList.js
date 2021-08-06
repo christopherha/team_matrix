@@ -22,7 +22,7 @@ const getAllCourses = () =>{
 
 
 const courseListItems = courses.map((course) =>
-<tr>
+<tr key = {course.id}>
     <td>{course.name} </td>
     <td>{course.instructor} </td>
     <td>{course.abreviatedName} </td>
@@ -45,9 +45,10 @@ return (
                 </thead>
                 <tbody>
                     {courseListItems}
-                    <button onClick={getAllCourses}>Get Courses</button>
                 </tbody>
             </table>
+            <button className = 'center'onClick={getAllCourses}>Get Courses</button>
+
 </div>
 
 
