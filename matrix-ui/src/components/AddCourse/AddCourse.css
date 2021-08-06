@@ -1,0 +1,11 @@
+.addCourseForm {
+    text-align: center;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1em;
+}
+
+.addCourseMessage {
+    color: orange;
+}

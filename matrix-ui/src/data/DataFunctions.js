@@ -20,3 +20,10 @@ export const enrollStudent = (studentId, courseId) => {
 export const disenrollStudent = (studentId, courseId) => {
     return enrollmentApi(studentId, courseId, "removeCourseFromStudent");
 }
+
+export const addNewCourse = (course) =>{
+    return  axios ({url: "http://localhost:8080/api/course/addCourse",
+        method: "POST",
+        headers: {'Accept':'application/json', 'Content-Type':'application/json'},
+        data: course});
+}
