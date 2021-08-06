@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import EnrollCourseView from "./components/EnrollCourseView/EnrollCourseView";
 import StudentList from './StudentList';

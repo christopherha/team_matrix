@@ -42,6 +42,12 @@ public class StudentController {
         return service.addCourseToStudent(courseId, studentId);
     }
 
+    @PostMapping("/removeCourseFromStudent")
+    public Student removeCourseFromStudent(@RequestParam("studentId") Long studentId,
+                                      @RequestParam("courseId") Long courseId) {
+        return service.removeCourseFromStudent(courseId, studentId);
+    }
+
     @PutMapping("/updateStudent")
     public Student updateStudent(@RequestBody Student student) {
         return service.updateStudent(student);

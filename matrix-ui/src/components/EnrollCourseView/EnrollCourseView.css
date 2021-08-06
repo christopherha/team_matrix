@@ -1,0 +1,11 @@
+.coursesViewTable {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    border: 1px solid #999;
+}
+.coursesViewTable td, .coursesViewTable th {
+    padding: 3px;
+    border: 1px solid #999;
+}

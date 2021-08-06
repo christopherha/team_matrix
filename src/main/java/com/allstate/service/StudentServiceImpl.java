@@ -5,11 +5,13 @@ import com.allstate.domain.Course;
 import com.allstate.domain.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -38,14 +40,29 @@ public class StudentServiceImpl implements StudentService {
         Course course = courseService.findById(courseId);
         Student student = repository.findById(studentId).get();
 
-
-        List<Course> courses = student.getCourses();
-        if(courses == null){
-            courses = new ArrayList<>();
+        if (!isStudentCurrentlyEnrolled(student, course)) {
+            List<Course> courses = student.getCourses();
+            if(courses == null){
+                courses = new ArrayList<>();
+            }
+            courses.add(course);
+            repository.save(student);
         }
-        courses.add(course);
-        repository.save(student);
+        return student;
+    }
 
+    @Override
+    public Student removeCourseFromStudent(Long courseId, Long studentId) {
+        Course course = courseService.findById(courseId);
+        Student student = repository.findById(studentId).get();
+
+        System.out.print("Passed " + courseId.toString() + " and " + studentId.toString() + ". student has this: " + student);
+
+        if (isStudentCurrentlyEnrolled(student, course)) {
+            student.setCourses(getUpdateCourseList(student, course));
+            System.out.print(student);
+            repository.save(student);
+        }
         return student;
     }
 
@@ -60,5 +77,19 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(Student student) {
         repository.save(student);
         return student;
+    }
+
+    private static boolean isStudentCurrentlyEnrolled(Student student, Course course) {
+        List<Course> enrolledCourses = student.getCourses();
+        return !CollectionUtils.isEmpty(enrolledCourses) ?
+                enrolledCourses.stream().anyMatch(enrolledCourse -> enrolledCourse.getId() == course.getId()) :
+                false;
+    }
+
+    private static List<Course> getUpdateCourseList(Student student, Course course) {
+        return student.getCourses()
+                .stream()
+                .filter(enrolledCourse -> enrolledCourse.getId() != course.getId())
+                .collect(Collectors.toList());
     }
 }

@@ -17,5 +17,7 @@ public interface StudentService {
 
     public Student addCourseToStudent(Long courseId, Long studentId);
 
+    public Student removeCourseFromStudent(Long courseId, Long studentId);
+
     public Map<String,String> deleteStudent(Long id);
 }
