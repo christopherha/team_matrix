@@ -1,9 +1,10 @@
 .addCourseForm {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     font-size: 1em;
+    border-collapse: collapse;
 }
 
 .addCourseMessage {

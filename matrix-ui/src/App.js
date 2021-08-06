@@ -6,6 +6,7 @@ import PageNotFound from "./components/PageNotFound/PageNotFound";
 import {BrowserRouter,Switch, Route} from "react-router-dom";
 import PageHeader from "./components/PageHeader/PageHeader";
 import AddCourse from "./components/AddCourse/AddCourse";
+import Student from "./components/Student/Student";
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
             <PageHeader/>
              <Switch>
                 <Route path="/find" exact={true}>
-                    <StudentList/>
+                    <Student/>
                 </Route>
                 <Route path="/addStudent" exact={true}>
                     <AddStudent/>
