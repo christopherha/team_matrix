@@ -43,7 +43,7 @@ const AddStudent = () => {
     const {firstName, lastName,  grade} = newStudent;
 
     return (
-        <form className="addStudentForm" onSubmit={handleSubmit}>
+          <form className="addStudentForm" onSubmit={handleSubmit}>
             <h2>New Student</h2>
             <label htmlFor="firstName">First Name</label>
             <input type="text" id="firstName"  value={firstName} onChange={handleChange} />

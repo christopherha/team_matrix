@@ -1,0 +1,23 @@
+.pageHeader {
+    background-color: lightskyblue;
+    min-height: 80px;
+    width: 100%;
+    padding: 10px;
+}
+
+.pageHeader h1 {
+    float: left;
+    margin-right: 50px;
+}
+
+.pageHeader ul.nav {
+    margin-top: 30px;
+}
+
+.pageHeader ul.nav li {
+    display:block;
+    padding: 2px;
+    font-size: 1em;
+    color: brown;
+    text-align: right;
+}

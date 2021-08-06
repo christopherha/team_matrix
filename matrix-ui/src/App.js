@@ -1,23 +1,36 @@
 import './App.css';
 import EnrollCourseView from "./components/EnrollCourseView/EnrollCourseView";
 import StudentList from './StudentList';
-//Search
-// 1. page -> display student list
-// 2. page -> display course List
-
-//3. page - add student
-//4.Enroll Student to a course
-    //Search by Student ==> it display the list of courses
-    // Enroll button => display the remaining course => then user can add the student to any of the displayed course.
-//Enroll
+import AddStudent from "./components/AddStudent/AddStudent";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
+import {BrowserRouter,Switch, Route} from "react-router-dom";
+import PageHeader from "./components/PageHeader/PageHeader";
 
 
 function App() {
   return (
-    <div className="App">
-      {/*<EnrollCourseView/>*/}
-     <StudentList/>
-    </div>
+
+    <BrowserRouter>
+        <div className="App">
+            <PageHeader/>
+             <Switch>
+                <Route path="/find" exact={true}>
+                    <StudentList/>
+                </Route>
+                <Route path="/add" exact={true}>
+                    <AddStudent/>
+                </Route>
+                <Route path="/enroll" exact={true}>
+                    <EnrollCourseView/>
+                </Route>
+                 <Route path="/" exact={true}>
+                 </Route>
+                <Route>
+                    <PageNotFound/>
+                </Route>
+            </Switch>
+        </div>
+    </BrowserRouter>
   );
 }
 
