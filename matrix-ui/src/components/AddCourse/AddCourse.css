@@ -1,4 +1,4 @@
-.addStudentForm {
+.addCourseForm {
     text-align: center;
     margin-top: 50px;
     margin-left: auto;
@@ -6,6 +6,6 @@
     font-size: 1em;
 }
 
-.addStudentMessage {
+.addCourseMessage {
     color: orange;
 }
