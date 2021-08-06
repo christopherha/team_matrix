@@ -1,6 +1,7 @@
 import './App.css';
 import EnrollCourseView from "./components/EnrollCourseView/EnrollCourseView";
 import StudentList from './StudentList';
+import CourseList from './CourseList';
 import AddStudent from "./components/AddStudent/AddStudent";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import {BrowserRouter,Switch, Route} from "react-router-dom";
@@ -15,8 +16,11 @@ function App() {
         <div className="App">
             <PageHeader/>
              <Switch>
-                <Route path="/find" exact={true}>
+                <Route path="/listStudents" exact={true}>
                     <StudentList/>
+                </Route>
+                <Route path="/listCourses" exact={true}>
+                    <CourseList/>
                 </Route>
                 <Route path="/addStudent" exact={true}>
                     <AddStudent/>

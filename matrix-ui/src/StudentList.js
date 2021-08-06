@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import axios from 'axios';
-
+import './components/EnrollCourseView/EnrollCourseView.css'
 
 function StudentList(props){
 
@@ -20,9 +20,10 @@ const getAllStudents = () =>{
 
 const studentListItems = student.map((student) =>
 <tr>
-    <tc>{student.firstName} </tc>
-    <tc>{student.lastName} </tc>
-    <tc>{student.grade} </tc>
+    <td><input type="checkbox"/></td>
+    <td>{student.firstName} </td>
+    <td>{student.lastName} </td>
+    <td>{student.grade} </td>
 </tr>
 
 
@@ -31,12 +32,20 @@ const studentListItems = student.map((student) =>
 
 return(
 <div>
-<button onClick={getAllStudents}>Button</button>
-<table>
-{studentListItems}
-</table>
-
-
+<table className="coursesViewTable">
+                <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Grade</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {studentListItems}
+                    <button onClick={getAllStudents}>Get Students</button>
+                </tbody>
+            </table>
 </div>
 
 );
